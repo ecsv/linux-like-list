@@ -1,6 +1,6 @@
 /* Minimal Linux-like double-linked list helper functions
  *
- * Copyright (c) 2012, Sven Eckelmann <sven@narfation.org>
+ * Copyright (c) 2012-2014, Sven Eckelmann <sven@narfation.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -141,6 +141,106 @@ static __inline__ int list_empty(const struct list_head *head)
 #define list_for_each_entry_safe(entry, safe, head, member) \
 	list_for_each_entry_safe_t(entry, safe, head, __typeof__(*entry), \
 				   member)
+#endif
+
+struct hlist_node {
+	struct hlist_node *next;
+	struct hlist_node **pprev;
+};
+
+struct hlist_head {
+	struct hlist_node *first;
+};
+
+#define HLIST_HEAD(head) \
+	struct hlist_head head = { NULL }
+
+static __inline__ void INIT_HLIST_HEAD(struct hlist_head *head)
+{
+	head->first = NULL;
+}
+
+static __inline__ void INIT_HLIST_NODE(struct hlist_node *node)
+{
+	node->next = NULL;
+	node->pprev = NULL;
+}
+
+static __inline__ void hlist_add_head(struct hlist_node *node,
+				      struct hlist_head *head)
+{
+	struct hlist_node *first = head->first;
+
+	head->first = node;
+	node->next = first;
+	node->pprev = &head->first;
+	if (first)
+		first->pprev = &node->next;
+}
+
+static __inline__ void hlist_del(struct hlist_node *node)
+{
+	struct hlist_node *next = node->next;
+	struct hlist_node **pprev = node->pprev;
+
+	if (pprev)
+		*pprev = next;
+
+	if (next)
+		next->pprev = pprev;
+}
+
+static __inline__ void hlist_del_init(struct hlist_node *node)
+{
+	hlist_del(node);
+	INIT_HLIST_NODE(node);
+}
+
+static __inline__ int hlist_empty(const struct hlist_head *head)
+{
+	return !head->first;
+}
+
+#define hlist_entry(node, type, member) container_of(node, type, member)
+
+#ifdef LIST_TYPEOF_USE
+#define hlist_entry_safe(node, type, member) __extension__ ({ \
+	 __typeof__(node) __node = (node); \
+	 !__node ? NULL : hlist_entry(__node, type, member); })
+#else
+#define hlist_entry_safe(node, type, member) \
+	(node) ? hlist_entry(node, type, member) : NULL
+#endif
+
+#define hlist_for_each(node, head) \
+	for (node = (head)->first; \
+	     node; \
+	     node = node->next)
+
+#define hlist_for_each_entry_t(entry, head, type, member) \
+	for (entry = hlist_entry_safe((head)->first, type, member); \
+	     entry; \
+	     entry = hlist_entry_safe(entry->member.next, type, member))
+
+#ifdef LIST_TYPEOF_USE
+#define hlist_for_each_entry(entry, head, member) \
+	hlist_for_each_entry_t(entry, head, __typeof__(*entry), member)
+#endif
+
+#define hlist_for_each_safe(node, safe, head) \
+	for (node = (head)->first; \
+	     node && ((safe = node->next) || 1); \
+	     node = safe)
+
+#define hlist_for_each_entry_safe_t(entry, safe, head, type, member) \
+	for (entry = hlist_entry_safe((head)->first, type, member); \
+	     entry && ((safe = entry->member.next) || 1); \
+	     entry = hlist_entry_safe(safe, type, member))
+
+#ifdef LIST_TYPEOF_USE
+#define hlist_for_each_entry_safe(entry, safe, head, member) \
+	hlist_for_each_entry_safe_t(entry, safe, head, __typeof__(*entry),\
+				    member)
 #endif
 
 #ifdef __cplusplus

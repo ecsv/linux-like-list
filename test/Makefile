@@ -40,6 +40,19 @@ TESTS_CXX_COMPATIBLE = \
  list-for-each \
  list-for-each-entry \
  list-for-each-entry-t \
+ hlist-entry \
+ hlist-entry-safe \
+ hlist-init-explicit \
+ hlist-init-local \
+ hlist-init-global \
+ hlist-add-head \
+ hlist-del \
+ hlist-for-each-safe \
+ hlist-for-each-entry-safe \
+ hlist-for-each-entry-safe-t \
+ hlist-for-each \
+ hlist-for-each-entry \
+ hlist-for-each-entry-t \
 
 TESTS_C_ONLY = \
 
