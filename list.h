@@ -92,6 +92,11 @@ static __inline__ void list_del(struct list_head *node)
 
 	next->prev = prev;
 	prev->next = next;
+
+#ifdef LIST_POISONING
+	node->prev = (struct list_head *)(0x00100100);
+	node->next = (struct list_head *)(0x00200200);
+#endif
 }
 
 static __inline__ void list_del_init(struct list_head *node)
@@ -188,6 +193,11 @@ static __inline__ void hlist_del(struct hlist_node *node)
 
 	if (next)
 		next->pprev = pprev;
+
+#ifdef LIST_POISONING
+	node->pprev = (struct hlist_node **)(0x00100100);
+	node->next = (struct hlist_node *)(0x00200200);
+#endif
 }
 
 static __inline__ void hlist_del_init(struct hlist_node *node)
