@@ -173,7 +173,7 @@ static __inline__ void list_del(struct list_head *node)
  * list_del_init() - Remove a list node from the list and reinitialize it
  * @node: pointer to the node
  *
- * The removed node will not end up in an uninitialized like when using
+ * The removed node will not end up in an uninitialized state like when using
  * list_del. Instead the node is initialized again to the unlinked state.
  */
 static __inline__ void list_del_init(struct list_head *node)
@@ -255,7 +255,7 @@ static __inline__ void list_splice_tail(struct list_head *list,
  * The all nodes from @list are added to to the beginning of the list of @head.
  * It is similar to list_add but for multiple nodes.
  *
- * The @list head will not end up in an uninitialized like when using
+ * The @list head will not end up in an uninitialized state like when using
  * list_splice. Instead the @list is initialized again to the an empty
  * list/unlinked state.
  */
@@ -274,7 +274,7 @@ static __inline__ void list_splice_init(struct list_head *list,
  * The all nodes from @list are added to to the end of the list of @head.
  * It is similar to list_add_tail but for multiple nodes.
  *
- * The @list head will not end up in an uninitialized like when using
+ * The @list head will not end up in an uninitialized state like when using
  * list_splice. Instead the @list is initialized again to the an empty
  * list/unlinked state.
  */
@@ -522,7 +522,7 @@ static __inline__ void hlist_del(struct hlist_node *node)
  * hlist_del_init() - Remove a hlist node from the hlist and reinitialize it
  * @node: pointer to the node
  *
- * The removed node will not end up in an uninitialized like when using
+ * The removed node will not end up in an uninitialized state like when using
  * hlist_del. Instead the node is initialized again to the unlinked state.
  */
 static __inline__ void hlist_del_init(struct hlist_node *node)
