@@ -110,7 +110,7 @@ static __inline__ void INIT_LIST_HEAD(struct list_head *head)
 /**
  * list_add() - Add a list node to the beginning of the list
  * @node: pointer to the new node
- * @head: pointer to the head of the hlist
+ * @head: pointer to the head of the list
  */
 static __inline__ void list_add(struct list_head *node,
 				struct list_head *head)
@@ -283,6 +283,34 @@ static __inline__ void list_splice_tail_init(struct list_head *list,
 {
 	list_splice_tail(list, head);
 	INIT_LIST_HEAD(list);
+}
+
+/**
+ * list_move() - Move a list node to the beginning of the list
+ * @node: pointer to the node
+ * @head: pointer to the head of the list
+ *
+ * The @node is removed from its old position/node and add to the beginning of
+ * @head
+ */
+static __inline__ void list_move(struct list_head *node, struct list_head *head)
+{
+	list_del(node);
+	list_add(node, head);
+}
+
+/**
+ * list_move_list() - Move a list node to the end of the list
+ * @node: pointer to the node
+ * @head: pointer to the head of the list
+ *
+ * The @node is removed from its old position/node and add to the end of @head
+ */
+static __inline__ void list_move_tail(struct list_head *node,
+				      struct list_head *head)
+{
+	list_del(node);
+	list_add_tail(node, head);
 }
 
 /**

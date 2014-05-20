@@ -40,6 +40,8 @@ TESTS_CXX_COMPATIBLE = \
  list-for-each \
  list-for-each-entry \
  list-for-each-entry-t \
+ list-move \
+ list-move-tail \
  list-splice \
  list-splice-tail \
  list-splice-init \

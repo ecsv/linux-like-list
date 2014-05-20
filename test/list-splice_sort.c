@@ -76,11 +76,10 @@ static void list_qsort(struct list_head *head)
 	list_del(&pivot->list);
 
 	list_for_each_entry_safe_t(item, is, head, struct listitem, list) {
-		list_del(&item->list);
 		if (cmpint(&item->i, &pivot->i) < 0)
-			list_add_tail(&item->list, &list_less);
+			list_move_tail(&item->list, &list_less);
 		else
-			list_add_tail(&item->list, &list_greater);
+			list_move(&item->list, &list_greater);
 	}
 
 	list_qsort(&list_less);
