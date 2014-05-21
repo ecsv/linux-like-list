@@ -297,6 +297,41 @@ static __inline__ void list_splice_tail_init(struct list_head *list,
 }
 
 /**
+ * list_cut_position() - Move beginning of a list to another list
+ * @head_to: pointer to the head of the list which receives nodes
+ * @head_from: pointer to the head of the list
+ * @node: pointer to the node in which defines the cutting point
+ *
+ * All entries from the beginning of the list @head_from to (including) the
+ * @node is moved to @head_from.
+ *
+ * @head_to is replaced when @head_from is not empty. @node must be a real
+ * list node from @head_from or the behavior is undefined.
+ */
+static __inline__ void list_cut_position(struct list_head *head_to,
+					 struct list_head *head_from,
+					 struct list_head *node)
+{
+	struct list_head *head_from_first = head_from->next;
+
+	if (list_empty(head_from))
+		return;
+
+	if (head_from == node) {
+		INIT_LIST_HEAD(head_to);
+		return;
+	}
+
+	head_from->next = node->next;
+	head_from->next->prev = head_from;
+
+	head_to->prev = node;
+	node->next = head_to;
+	head_to->next = head_from_first;
+	head_to->next->prev = head_to;
+}
+
+/**
  * list_move() - Move a list node to the beginning of the list
  * @node: pointer to the node
  * @head: pointer to the head of the list

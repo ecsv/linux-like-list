@@ -48,6 +48,8 @@ TESTS_CXX_COMPATIBLE = \
  list-splice-init \
  list-splice-tail-init \
  list-splice_sort \
+ list-cut-position \
+ list-cut-position_sort \
  hlist-entry \
  hlist-entry-safe \
  hlist-init_explicit \
