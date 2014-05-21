@@ -66,7 +66,7 @@ static void list_qsort(struct list_head *head)
 	struct listitem *pivot;
 	struct listitem *item, *is;
 
-	if (list_empty(head))
+	if (list_empty(head) || list_is_singular(head))
 		return;
 
 	INIT_LIST_HEAD(&list_less);

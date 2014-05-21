@@ -34,6 +34,7 @@ TESTS_CXX_COMPATIBLE = \
  list-del \
  list-del-init \
  list-first-entry \
+ list-is-singular \
  list-for-each-safe \
  list-for-each-entry-safe \
  list-for-each-entry-safe-t \

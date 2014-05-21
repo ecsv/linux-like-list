@@ -194,6 +194,17 @@ static __inline__ int list_empty(const struct list_head *head)
 }
 
 /**
+ * list_is_singular() - Check if list head has exactly one node attached
+ * @head: pointer to the head of the list
+ *
+ * Return: 0 - list is not singular !0 -list has exactly one entry
+ */
+static __inline__ int list_is_singular(const struct list_head *head)
+{
+	return (!list_empty(head) && head->prev == head->next);
+}
+
+/**
  * list_splice() - Add list nodes from a list to beginning of another list
  * @list: pointer to the head of the list with the node entries
  * @head: pointer to the head of the list
