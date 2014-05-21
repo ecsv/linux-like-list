@@ -64,9 +64,22 @@ int main(void)
 	assert(!list_empty(&testlist2));
 
 	list_splice_tail(&testlist2, &testlist);
+	INIT_LIST_HEAD(&testlist2);
 
 	i = -5;
-	list_for_each_entry_safe_t(item, is, &testlist, struct listitem, list) {
+	list_for_each_entry_t(item, &testlist, struct listitem, list) {
+		assert(item->i == i);
+		i++;
+	}
+
+	assert(i == 5);
+
+	list_splice_tail(&testlist, &testlist2);
+	assert(!list_empty(&testlist2));
+
+	i = -5;
+	list_for_each_entry_safe_t(item, is, &testlist2, struct listitem,
+				   list) {
 		assert(item->i == i);
 		list_del(&item->list);
 		free(item);
@@ -74,7 +87,7 @@ int main(void)
 	}
 
 	assert(i == 5);
-	assert(list_empty(&testlist));
+	assert(list_empty(&testlist2));
 
 	return 0;
 }
