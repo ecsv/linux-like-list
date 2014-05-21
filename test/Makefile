@@ -26,9 +26,9 @@
 TESTS_CXX_COMPATIBLE = \
  containerof \
  list-entry \
- list-init-explicit \
- list-init-local \
- list-init-global \
+ list-init_explicit \
+ list-init_local \
+ list-init_global \
  list-add \
  list-add-tail \
  list-del \
@@ -49,9 +49,9 @@ TESTS_CXX_COMPATIBLE = \
  list-splice_sort \
  hlist-entry \
  hlist-entry-safe \
- hlist-init-explicit \
- hlist-init-local \
- hlist-init-global \
+ hlist-init_explicit \
+ hlist-init_local \
+ hlist-init_global \
  hlist-add-head \
  hlist-del \
  hlist-for-each-safe \
