@@ -50,6 +50,9 @@ TESTS_CXX_COMPATIBLE = \
  list-splice_sort \
  list-cut-position \
  list-cut-position_sort \
+ list-add-before \
+ list-add-behind \
+ list-add-before_sort \
  hlist-entry \
  hlist-entry-safe \
  hlist-init_explicit \

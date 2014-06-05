@@ -140,6 +140,26 @@ static __inline__ void list_add_tail(struct list_head *node,
 }
 
 /**
+ * list_add_before() - Add a list node before another node to the list
+ * @new_node: pointer to the new node
+ * @node: pointer to the reference node in the list
+ *
+ * WARNING this functionality is not available in the Linux list implementation
+ */
+#define list_add_before(new_node, node) \
+	list_add_tail(new_node, node)
+
+/**
+ * list_add_behind() - Add a list node behind another node to the list
+ * @new_node: pointer to the new node
+ * @node: pointer to the reference node in the list
+ *
+ * WARNING this functionality is not available in the Linux list implementation
+ */
+#define list_add_behind(new_node, node) \
+	list_add(new_node, node)
+
+/**
  * list_del() - Remove a list node from the list
  * @node: pointer to the node
  *
