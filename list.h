@@ -641,6 +641,27 @@ static __inline__ int hlist_empty(const struct hlist_head *head)
 }
 
 /**
+ * hlist_move_list() - Move hlist nodes from a hlist head new hlist head
+ * @list: pointer to the head of the hlist with the node entries
+ * @head: pointer to the head of the hlist
+ *
+ * All nodes from @list are added to to the beginning of the list of @head.
+ * @head can be uninitialized or an empty, initialized hlist. All entries of
+ * a non-empty hlist @head would be lost after this operation.
+ *
+ * The @list head will not end up in an uninitialized state. Instead the @list
+ * is initialized again to an empty hlist.
+ */
+static __inline__ void hlist_move_list(struct hlist_head *list,
+				       struct hlist_head *head)
+{
+	head->first = list->first;
+	if (head->first)
+		head->first->pprev = &head->first;
+	INIT_HLIST_HEAD(list);
+}
+
+/**
  * hlist_entry() - Calculate address of entry that contains hlist node
  * @node: pointer to hlist node
  * @type: type of the entry containing the hlist node
