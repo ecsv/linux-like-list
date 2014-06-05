@@ -404,6 +404,8 @@ static __inline__ void list_move_tail(struct list_head *node,
  * The nodes and the head of the list must must be kept unmodified while
  * iterating through it. Any modifications to the the list will cause undefined
  * behavior.
+ *
+ * WARNING this functionality is not available in the Linux list implementation
  */
 #define list_for_each_entry_t(entry, head, type, member) \
 	for (entry = list_entry((head)->next, type, member); \
@@ -449,6 +451,8 @@ static __inline__ void list_move_tail(struct list_head *node,
  *
  * The current node (iterator) is allowed to be removed from the list. Any
  * other modifications to the the list will cause undefined behavior.
+ *
+ * WARNING this functionality is not available in the Linux list implementation
  */
 #define list_for_each_entry_safe_t(entry, safe, head, type, member) \
 	for (entry = list_entry((head)->next, type, member), \
@@ -667,6 +671,8 @@ static __inline__ int hlist_empty(const struct hlist_head *head)
  * The nodes and the head of the hlist must must be kept unmodified while
  * iterating through it. Any modifications to the the hlist will cause undefined
  * behavior.
+ *
+ * WARNING this functionality is not available in the Linux list implementation
  */
 #define hlist_for_each_entry_t(entry, head, type, member) \
 	for (entry = hlist_entry_safe((head)->first, type, member); \
@@ -712,6 +718,8 @@ static __inline__ int hlist_empty(const struct hlist_head *head)
  *
  * The current node (iterator) is allowed to be removed from the hlist. Any
  * other modifications to the the hlist will cause undefined behavior.
+ *
+ * WARNING this functionality is not available in the Linux list implementation
  */
 #define hlist_for_each_entry_safe_t(entry, safe, head, type, member) \
 	for (entry = hlist_entry_safe((head)->first, type, member); \
