@@ -229,9 +229,9 @@ static __inline__ int list_is_singular(const struct list_head *head)
  * @list: pointer to the head of the list with the node entries
  * @head: pointer to the head of the list
  *
- * The all nodes from @list are added to to the beginning of the list of @head.
+ * All nodes from @list are added to to the beginning of the list of @head.
  * It is similar to list_add but for multiple nodes. The @list head is not
- * modified but has to be initialized to be used as a valid list head/node
+ * modified and has to be initialized to be used as a valid list head/node
  * again.
  */
 static __inline__ void list_splice(struct list_head *list,
@@ -256,9 +256,9 @@ static __inline__ void list_splice(struct list_head *list,
  * @list: pointer to the head of the list with the node entries
  * @head: pointer to the head of the list
  *
- * The all nodes from @list are added to to the end of the list of @head.
+ * All nodes from @list are added to to the end of the list of @head.
  * It is similar to list_add_tail but for multiple nodes. The @list head is not
- * modified but has to be initialized to be used as a valid list head/node
+ * modified and has to be initialized to be used as a valid list head/node
  * again.
  */
 static __inline__ void list_splice_tail(struct list_head *list,
@@ -283,7 +283,7 @@ static __inline__ void list_splice_tail(struct list_head *list,
  * @list: pointer to the head of the list with the node entries
  * @head: pointer to the head of the list
  *
- * The all nodes from @list are added to to the beginning of the list of @head.
+ * All nodes from @list are added to to the beginning of the list of @head.
  * It is similar to list_add but for multiple nodes.
  *
  * The @list head will not end up in an uninitialized state like when using
@@ -302,7 +302,7 @@ static __inline__ void list_splice_init(struct list_head *list,
  * @list: pointer to the head of the list with the node entries
  * @head: pointer to the head of the list
  *
- * The all nodes from @list are added to to the end of the list of @head.
+ * All nodes from @list are added to to the end of the list of @head.
  * It is similar to list_add_tail but for multiple nodes.
  *
  * The @list head will not end up in an uninitialized state like when using
