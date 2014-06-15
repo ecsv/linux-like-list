@@ -366,7 +366,7 @@ static __inline__ void list_move(struct list_head *node, struct list_head *head)
 }
 
 /**
- * list_move_list() - Move a list node to the end of the list
+ * list_move_tail() - Move a list node to the end of the list
  * @node: pointer to the node
  * @head: pointer to the head of the list
  *
