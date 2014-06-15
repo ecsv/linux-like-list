@@ -66,6 +66,10 @@ TESTS_CXX_COMPATIBLE = \
  hlist-for-each \
  hlist-for-each-entry \
  hlist-for-each-entry-t \
+ hlist-move-list \
+ hlist-add-before \
+ hlist-add-behind \
+ hlist-add-before_sort \
 
 TESTS_C_ONLY = \
 

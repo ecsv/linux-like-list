@@ -584,6 +584,39 @@ static __inline__ void hlist_add_head(struct hlist_node *node,
 }
 
 /**
+ * hlist_add_before() - Add a hlist node before another node to the hlist
+ * @new_node: pointer to the new node
+ * @node: pointer to the reference node in the hlist
+ */
+static __inline__ void hlist_add_before(struct hlist_node *new_node,
+					struct hlist_node *node)
+{
+	struct hlist_node **pprev = node->pprev;
+
+	*pprev = new_node;
+	new_node->next = node;
+	new_node->pprev = pprev;
+	node->pprev = &new_node->next;
+}
+
+/**
+ * hlist_add_behind() - Add a hlist node behind another node to the hlist
+ * @new_node: pointer to the new node
+ * @node: pointer to the reference node in the hlist
+ */
+static __inline__ void hlist_add_behind(struct hlist_node *new_node,
+					struct hlist_node *node)
+{
+	struct hlist_node *next = node->next;
+
+	node->next = new_node;
+	new_node->pprev = &node->next;
+	new_node->next = next;
+	if (next)
+		next->pprev = &new_node->next;
+}
+
+/**
  * hlist_del() - Remove a hlist node from the hlist
  * @node: pointer to the node
  *
