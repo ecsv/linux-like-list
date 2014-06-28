@@ -60,44 +60,37 @@ static int cmpint(const void *p1, const void *p2)
 	return *i1 - *i2;
 }
 
-static void list_mergesort(struct list_head *head, size_t elements)
+static size_t list_cut_elements(struct list_head *head_to,
+				struct list_head *head_from,
+				size_t elements)
 {
-	struct list_head list1, list2;
+	struct list_head *item;
 	struct list_head *middle;
-	struct listitem *item1, *item2;
-	size_t elements_half = elements / 2;
-	size_t i;
 
-	if (list_empty(head) || list_is_singular(head))
-		return;
+	INIT_LIST_HEAD(head_to);
 
-	INIT_LIST_HEAD(&list1);
-	INIT_LIST_HEAD(&list2);
+	middle = head_from;
+	list_for_each(item, head_from) {
+		elements--;
+		middle = item;
 
-	i = 0;
-	middle = head;
-	list_for_each_entry_t(item1, head, struct listitem, list) {
-		i++; 
-		if (i == elements_half) {
-			middle = &item1->list;
+		if (!elements)
 			break;
-		}
 	}
 
-	if (i != elements_half) {
-		elements = i;
-		elements_half = 0;
-	}
+	list_cut_position(head_to, head_from, middle);
 
-	list_cut_position(&list1, head, middle);
-	list_splice_tail_init(head, &list2);
+	return elements;
+}
 
-	list_mergesort(&list1, elements_half);
-	list_mergesort(&list2, elements - elements_half);
+static void list_merge_ordered(struct list_head *list1, struct list_head *list2,
+			       struct list_head *head)
+{
+	struct listitem *item1, *item2;
 
-	while (!list_empty(&list1) && !list_empty(&list2)) {
-		item1 = list_first_entry(&list1, struct listitem, list);
-		item2 = list_first_entry(&list2, struct listitem, list);
+	while (!list_empty(list1) && !list_empty(list2)) {
+		item1 = list_first_entry(list1, struct listitem, list);
+		item2 = list_first_entry(list2, struct listitem, list);
 
 		if (cmpint(&item1->i, &item2->i) < 0)
 			list_move_tail(&item1->list, head);
@@ -105,8 +98,38 @@ static void list_mergesort(struct list_head *head, size_t elements)
 			list_move_tail(&item2->list, head);
 	}
 
-	list_splice_tail(&list1, head);
-	list_splice_tail(&list2, head);
+	list_splice_tail(list1, head);
+	list_splice_tail(list2, head);
+}
+
+static void list_mergesort(struct list_head *head, size_t elements)
+{
+	struct list_head list1, list2;
+	size_t elements_half = elements / 2;
+	size_t missing;
+
+	if (list_empty(head) || list_is_singular(head))
+		return;
+
+	INIT_LIST_HEAD(&list1);
+	INIT_LIST_HEAD(&list2);
+
+	missing = list_cut_elements(&list1, head, elements_half);
+	if (missing) {
+		elements_half -= - missing;
+		elements = elements_half;
+	}
+
+	missing = list_cut_elements(&list2, head, elements - elements_half);
+	if (missing)
+		elements -= missing;
+
+	assert(list_empty(head));
+
+	list_mergesort(&list1, elements_half);
+	list_mergesort(&list2, elements - elements_half);
+
+	list_merge_ordered(&list1, &list2, head);
 }
 
 int main(void)

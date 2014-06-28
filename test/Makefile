@@ -49,7 +49,7 @@ TESTS_CXX_COMPATIBLE = \
  list_splice_tail_init \
  list_splice-sort \
  list_cut_position \
- list_cut_position-sort \
+ list_cut_position-sort-topdown \
  list_add_before \
  list_add_behind \
  list_add_before-sort \
