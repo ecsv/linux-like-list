@@ -50,6 +50,7 @@ TESTS_CXX_COMPATIBLE = \
  list_splice-sort \
  list_cut_position \
  list_cut_position-sort-topdown \
+ list_cut_position-sort-bottomup \
  list_add_before \
  list_add_behind \
  list_add_before-sort \
