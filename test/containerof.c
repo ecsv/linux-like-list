@@ -32,9 +32,9 @@ struct teststruct {
 
 int main(void)
 {
-	struct teststruct *item = NULL;
+	struct teststruct item;
 
-	assert(item == container_of(&item->b, struct teststruct, b));
+	assert(&item == container_of(&item.b, struct teststruct, b));
 
 	return 0;
 }

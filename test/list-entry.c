@@ -32,9 +32,9 @@ struct listitem {
 
 int main(void)
 {
-	struct listitem *item = NULL;
+	struct listitem item;
 
-	assert(item == list_entry(&item->list, struct listitem, list));
+	assert(&item == list_entry(&item.list, struct listitem, list));
 
 	return 0;
 }

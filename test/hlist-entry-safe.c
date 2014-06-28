@@ -32,10 +32,10 @@ struct listitem {
 
 int main(void)
 {
-	struct listitem *item = NULL;
+	struct listitem item;
 	struct hlist_node *node = NULL;
 
-	assert(item == hlist_entry_safe(&item->list, struct listitem, list));
+	assert(&item == hlist_entry_safe(&item.list, struct listitem, list));
 	assert(NULL == hlist_entry_safe(node, struct listitem, list));
 
 	return 0;
