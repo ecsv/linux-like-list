@@ -102,13 +102,15 @@ RM ?= rm -f
 LINK.c = $(Q_CC)$(CC) -x c $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
 LINK.cc = $(Q_CC)$(CXX) -x c++ $(CFLAGS) $(CXXLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
 
+TESTS_OK = $(TESTS:=.ok)
+
 # default target
-all: $(TESTS)
-	@set -e; \
-	for i in $(TESTS); do \
-		echo "T:  $(COMPILER_NAME) $(TESTRUN_NAME) $${i}"; \
-		$(TESTRUN_WRAPPER) ./$$i ;\
-	done
+all: $(TESTS_OK)
+
+$(TESTS_OK): %.ok: %
+	@echo "T:  $(COMPILER_NAME) $(TESTRUN_NAME) $<"
+	@$(TESTRUN_WRAPPER) ./$<
+	@touch $@
 
 # standard build rules
 .SUFFIXES: .c
@@ -120,7 +122,7 @@ else
 endif
 
 clean:
-	@$(RM) $(TESTS_ALL) $(DEP)
+	@$(RM) $(TESTS_ALL) $(DEP) $(TESTS_OK)
 
 # load dependencies
 DEP = $(TESTS:=.d)
