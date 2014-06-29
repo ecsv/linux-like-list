@@ -92,7 +92,7 @@ static void list_merge_ordered(struct list_head *list1, struct list_head *list2,
 		item1 = list_first_entry(list1, struct listitem, list);
 		item2 = list_first_entry(list2, struct listitem, list);
 
-		if (cmpint(&item1->i, &item2->i) < 0)
+		if (cmpint(&item1->i, &item2->i) <= 0)
 			list_move_tail(&item1->list, head);
 		else
 			list_move_tail(&item2->list, head);
