@@ -63,12 +63,7 @@ static int cmpint(const void *p1, const void *p2)
 static void list_insert_sorted(struct listitem *entry, struct hlist_head *head)
 {
 	struct listitem *item;
-	struct listitem *last;
-
-	if (hlist_empty(head)) {
-		hlist_add_head(&entry->list, head);
-		return;
-	}
+	struct listitem *last = NULL;
 
 	hlist_for_each_entry_t(item, head, struct listitem, list) {
 		if (cmpint(&entry->i, &item->i) < 0) {
@@ -78,7 +73,10 @@ static void list_insert_sorted(struct listitem *entry, struct hlist_head *head)
 		last = item;
 	}
 
-	hlist_add_behind(&entry->list, &last->list);
+	if (!last)
+		hlist_add_head(&entry->list, head);
+	else
+		hlist_add_behind(&entry->list, &last->list);
 }
 
 static void list_insertsort(struct hlist_head *head)
