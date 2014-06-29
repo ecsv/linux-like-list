@@ -5,6 +5,8 @@ compiler:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y valgrind
+env:
+ - BUILD_CXX=0
+ - BUILD_CXX=1
 script:
  - make -C test clean && make -C test && TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck make -C test
- - make -C test clean && BUILD_CXX=1 make -C test && BUILD_CXX=1 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck make -C test
