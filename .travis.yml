@@ -8,5 +8,7 @@ before_install:
 env:
  - BUILD_CXX=0
  - BUILD_CXX=1
+ - BUILD_CXX=0 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck
+ - BUILD_CXX=1 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck
 script:
- - make -C test clean && make -C test && TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck make -C test
+ - make -C test clean && make -C test
