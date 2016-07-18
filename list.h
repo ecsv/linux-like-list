@@ -1,6 +1,6 @@
 /* Minimal Linux-like double-linked list helper functions
  *
- * Copyright (c) 2012-2014, Sven Eckelmann <sven@narfation.org>
+ * Copyright (c) 2012-2016, Sven Eckelmann <sven@narfation.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -399,6 +399,17 @@ static __inline__ void list_move_tail(struct list_head *node,
  */
 #define list_first_entry(head, type, member) \
 	list_entry((head)->next, type, member)
+
+/**
+ * list_last_entry() - get last entry of the list
+ * @head: pointer to the head of the list
+ * @type: type of the entry containing the list node
+ * @member: name of the list_head member variable in struct @type
+ *
+ * Return: @type pointer of last entry in list
+ */
+#define list_last_entry(head, type, member) \
+	list_entry((head)->prev, type, member)
 
 /**
  * list_for_each - iterate over list nodes
