@@ -115,14 +115,10 @@ static void list_mergesort(struct list_head *head, size_t elements)
 	INIT_LIST_HEAD(&list2);
 
 	missing = list_cut_elements(&list1, head, elements_half);
-	if (missing) {
-		elements_half -= - missing;
-		elements = elements_half;
-	}
+	assert(!missing);
 
 	missing = list_cut_elements(&list2, head, elements - elements_half);
-	if (missing)
-		elements -= missing;
+	assert(!missing);
 
 	assert(list_empty(head));
 
