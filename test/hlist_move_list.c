@@ -67,5 +67,9 @@ int main(void)
 	assert(i == 6);
 	assert(hlist_empty(&testlist2));
 
+	hlist_move_list(&testlist, &testlist2);
+	assert(hlist_empty(&testlist));
+	assert(hlist_empty(&testlist2));
+
 	return 0;
 }
