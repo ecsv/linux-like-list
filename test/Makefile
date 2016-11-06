@@ -62,6 +62,7 @@ TESTS_CXX_COMPATIBLE = \
  hlist_init-global \
  hlist_add_head \
  hlist_del \
+ hlist_del_init \
  hlist_for_each_safe \
  hlist_for_each_entry_safe \
  hlist_for_each_entry_safe_t \
