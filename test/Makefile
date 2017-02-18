@@ -3,7 +3,7 @@
 #
 # Minimal Linux-like double-linked list helper functions test
 #
-# Copyright (c) 2012-2014, Sven Eckelmann <sven@narfation.org>
+# Copyright (c) 2012-2016, Sven Eckelmann <sven@narfation.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -94,15 +94,22 @@ endif
 ifneq ($(findstring $(MAKEFLAGS),s),s)
 ifndef V
 	Q_CC = @echo '    $(COMPILER_NAME)' $@;
+	Q_LD = @echo '    $(COMPILER_NAME)' $@;
 	export Q_CC
+	export Q_LD
 endif
 endif
 
 # standard build tools
 CC ?= gcc
 RM ?= rm -f
-LINK.c = $(Q_CC)$(CC) -x c $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
-LINK.cc = $(Q_CC)$(CXX) -x c++ $(CFLAGS) $(CXXLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+ifeq ("$(BUILD_CXX)", "1")
+COMPILE.c = $(Q_CC)$(CXX) -x c++ $(CFLAGS) $(CXXLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+LINK.o = $(Q_LD)$(CXX) $(CFLAGS) $(CXXLAGS) $(LDFLAGS) $(TARGET_ARCH)
+else
+COMPILE.c = $(Q_CC)$(CC) -x c $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+LINK.o = $(Q_LD)$(CC) $(CFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+endif
 
 TESTS_OK = $(TESTS:=.ok)
 
@@ -115,16 +122,15 @@ $(TESTS_OK): %.ok: %
 	@touch $@
 
 # standard build rules
-.SUFFIXES: .c
-.c:
-ifeq ("$(BUILD_CXX)", "1")
-	$(LINK.cc) $< $(LDLIBS) -o $@
-else
-	$(LINK.c) $< $(LDLIBS) -o $@
-endif
+.SUFFIXES: .o .c
+.c.o:
+	$(COMPILE.c) -o $@ $<
+
+$(TESTS): %: %.o
+	$(LINK.o) $^ $(LDLIBS) -o $@
 
 clean:
-	@$(RM) $(TESTS_ALL) $(DEP) $(TESTS_OK)
+	@$(RM) $(TESTS_ALL) $(DEP) $(TESTS_OK) $(TESTS:=.o) $(TESTS:=.d)
 
 # load dependencies
 DEP = $(TESTS:=.d)
