@@ -1,12 +1,13 @@
-sudo: required
+sudo: false
 dist: trusty
 language: cpp
 compiler:
   - gcc
   - clang
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y valgrind
+addons:
+  apt:
+    packages:
+    - valgrind
 after_success:
   - cd test && bash <(curl -s https://codecov.io/bash)
 env:
