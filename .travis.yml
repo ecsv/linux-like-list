@@ -10,24 +10,12 @@ before_install:
 after_success:
   - cd test && bash <(curl -s https://codecov.io/bash)
 env:
-  global:
-   - secure: "hHACS1aAb6yEP+rphv75PwuT/aZcjzs0JCOedBmO68MJulu2H0aexqq+am0MifmrorGFMIcwS0/BzNAkbONOoB0iXxZ88bO6P4NznoY3opE9znuG2PBtQfjb6RvaFMArl6qe2t38GsPNrBc3lExCOPJmqkWs7qrTygmi1ftr38Q="
   matrix:
    - BUILD_CXX=0 CFLAGS="--coverage"
    - BUILD_CXX=1 CFLAGS="--coverage"
    - BUILD_CXX=0 CFLAGS="-O3"
    - BUILD_CXX=1 CFLAGS="-O3"
-   - BUILD_CXX=0 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck
-   - BUILD_CXX=1 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' TESTRUN_NAME=memcheck
+   - BUILD_CXX=0 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' CFLAGS="-O1 -g3" TESTRUN_NAME=memcheck
+   - BUILD_CXX=1 TESTRUN_WRAPPER='valgrind -q --error-exitcode=126 --track-origins=yes --leak-check=full' CFLAGS="-O1 -g3" TESTRUN_NAME=memcheck
 script:
  - make -C test clean && make -j$(nproc) -C test
-
-addons:
-  coverity_scan:
-    project:
-      name: "ecsv/linux-like-list"
-      description: "Build submitted via Travis CI"
-    notification_email: "sven+coverity@narfation.org"
-    build_command_prepend: make -C test clean
-    build_command: make -C test
-    branch_pattern: coverity_scan
