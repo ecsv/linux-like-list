@@ -25,16 +25,13 @@
 #include <assert.h>
 #include <stdlib.h>
 
-struct listitem {
-	int i;
-	struct list_head list;
-};
+#include "common.h"
 
 int main(void)
 {
 	struct list_head testlist;
 	struct listitem *item, *is;
-	int i;
+	size_t i;
 
 	INIT_LIST_HEAD(&testlist);
 

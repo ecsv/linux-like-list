@@ -25,16 +25,13 @@
 #include <assert.h>
 #include <stdlib.h>
 
-struct listitem {
-	int i;
-	struct list_head list;
-};
+#include "common.h"
 
 int main(void)
 {
 	struct list_head testlist, testlist2;
 	struct listitem *item, *is;
-	int i;
+	size_t i;
 
 	INIT_LIST_HEAD(&testlist);
 	INIT_LIST_HEAD(&testlist2);
@@ -42,7 +39,7 @@ int main(void)
 	assert(list_empty(&testlist));
 	assert(list_empty(&testlist2));
 
-	for (i = -5; i < 0; i++) {
+	for (i = 0; i < 5; i++) {
 		item = (struct listitem *)malloc(sizeof(*item));
 		assert(item);
 		item->i = i;
@@ -51,7 +48,7 @@ int main(void)
 
 	assert(!list_empty(&testlist));
 
-	for (i = 0; i < 5; i++) {
+	for (i = 5; i < 10; i++) {
 		item = (struct listitem *)malloc(sizeof(*item));
 		assert(item);
 		item->i = i;
@@ -65,7 +62,7 @@ int main(void)
 
 	assert(list_empty(&testlist2));
 
-	i = -5;
+	i = 0;
 	list_for_each_entry_safe_t(item, is, &testlist, struct listitem, list) {
 		assert(item->i == i);
 		list_del(&item->list);
@@ -73,7 +70,7 @@ int main(void)
 		i++;
 	}
 
-	assert(i == 5);
+	assert(i == 10);
 	assert(list_empty(&testlist));
 
 	return 0;

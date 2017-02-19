@@ -24,20 +24,17 @@
 #include "../list.h"
 #include <assert.h>
 
-struct listitem {
-	int i;
-	struct hlist_node list;
-};
+#include "common.h"
 
 int main(void)
 {
 	struct hlist_head testlist;
-	struct listitem item1;
-	struct listitem item2;
-	struct listitem item3;
-	struct listitem item4;
-	struct listitem *item;
-	int i;
+	struct hlistitem item1;
+	struct hlistitem item2;
+	struct hlistitem item3;
+	struct hlistitem item4;
+	struct hlistitem *item;
+	size_t i;
 
 	item1.i = 1;
 	item2.i = 2;
@@ -53,7 +50,7 @@ int main(void)
 	hlist_add_before(&item3.list, &item4.list);
 
 	i = 1;
-	hlist_for_each_entry_t(item, &testlist, struct listitem, list) {
+	hlist_for_each_entry_t(item, &testlist, struct hlistitem, list) {
 		assert(item->i == i);
 		i++;
 	}

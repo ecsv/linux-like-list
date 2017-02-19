@@ -25,18 +25,15 @@
 #include <assert.h>
 #include <stddef.h>
 
-struct listitem {
-	int i;
-	struct hlist_node list;
-};
+#include "common.h"
 
 int main(void)
 {
-	struct listitem item;
+	struct hlistitem item;
 	struct hlist_node *node = NULL;
 
-	assert(&item == hlist_entry_safe(&item.list, struct listitem, list));
-	assert(NULL == hlist_entry_safe(node, struct listitem, list));
+	assert(&item == hlist_entry_safe(&item.list, struct hlistitem, list));
+	assert(NULL == hlist_entry_safe(node, struct hlistitem, list));
 
 	return 0;
 }

@@ -24,10 +24,7 @@
 #include "../list.h"
 #include <assert.h>
 
-struct listitem {
-	int i;
-	struct list_head list;
-};
+#include "common.h"
 
 int main(void)
 {
@@ -37,7 +34,7 @@ int main(void)
 	struct listitem item3;
 	struct listitem item4;
 	struct listitem *item;
-	int i;
+	size_t i;
 
 	item1.i = 1;
 	item2.i = 2;

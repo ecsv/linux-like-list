@@ -24,15 +24,12 @@
 #include "../list.h"
 #include <assert.h>
 
-struct listitem {
-	int i;
-	struct hlist_node list;
-};
+#include "common.h"
 
 int main(void)
 {
 	struct hlist_head testlist;
-	struct listitem item;
+	struct hlistitem item;
 
 	INIT_HLIST_HEAD(&testlist);
 	assert(hlist_empty(&testlist));

@@ -25,16 +25,13 @@
 #include <assert.h>
 #include <stddef.h>
 
-struct listitem {
-	int i;
-	struct hlist_node list;
-};
+#include "common.h"
 
 int main(void)
 {
-	struct listitem item;
+	struct hlistitem item;
 
-	assert(&item == hlist_entry(&item.list, struct listitem, list));
+	assert(&item == hlist_entry(&item.list, struct hlistitem, list));
 
 	return 0;
 }

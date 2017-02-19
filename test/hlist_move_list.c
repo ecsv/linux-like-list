@@ -25,24 +25,21 @@
 #include <assert.h>
 #include <stdlib.h>
 
-struct listitem {
-	int i;
-	struct hlist_node list;
-};
+#include "common.h"
 
 int main(void)
 {
 	struct hlist_head testlist, testlist2;
-	struct listitem *item;
+	struct hlistitem *item;
 	struct hlist_node *is;
-	int i;
+	size_t i;
 
 	INIT_HLIST_HEAD(&testlist);
 
 	assert(hlist_empty(&testlist));
 
 	for (i = 5; i > 0; i--) {
-		item = (struct listitem *)malloc(sizeof(*item));
+		item = (struct hlistitem *)malloc(sizeof(*item));
 		assert(item);
 		item->i = i;
 		hlist_add_head(&item->list, &testlist);
@@ -56,7 +53,7 @@ int main(void)
 	assert(!hlist_empty(&testlist2));
 
 	i = 1;
-	hlist_for_each_entry_safe_t(item, is, &testlist2, struct listitem,
+	hlist_for_each_entry_safe_t(item, is, &testlist2, struct hlistitem,
 				    list) {
 		assert(item->i == i);
 		hlist_del(&item->list);
