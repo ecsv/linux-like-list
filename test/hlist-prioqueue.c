@@ -97,7 +97,7 @@ hpqueue_mergepairs(struct hlist_head *children,
 	/* left to right */
 	while (!hlist_empty(children)) {
 		p1 = hlist_entry(children->first, struct hpqueue_node, list);
-		hlist_del_init(&p1->list);
+		hlist_del(&p1->list);
 
 		if (hlist_empty(children)) {
 			hlist_add_head(&p1->list, &ltr_pairs);
@@ -105,7 +105,7 @@ hpqueue_mergepairs(struct hlist_head *children,
 		}
 
 		p2 = hlist_entry(children->first, struct hpqueue_node, list);
-		hlist_del_init(&p2->list);
+		hlist_del(&p2->list);
 
 		r = hpqueue_merge(p1, p2, compar);
 		hlist_add_head(&r->list, &ltr_pairs);
@@ -113,11 +113,11 @@ hpqueue_mergepairs(struct hlist_head *children,
 
 	/* right to left merge */
 	r = hlist_entry(ltr_pairs.first, struct hpqueue_node, list);
-	hlist_del_init(&r->list);
+	hlist_del(&r->list);
 
 	hlist_for_each_entry_safe_t(p2, s, &ltr_pairs, struct hpqueue_node, list) {
 		p1 = r;
-		hlist_del_init(&p2->list);
+		hlist_del(&p2->list);
 
 		r = hpqueue_merge(p1, p2, compar);
 	}
@@ -150,6 +150,7 @@ static void hpqueue_remove(struct hpqueue_node **queue,
 	/* update queue root when removed element was root */
 	if (*queue == n) {
 		*queue = new_min;
+		INIT_HLIST_NODE(&new_min->list);
 		return;
 	}
 
