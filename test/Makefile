@@ -73,7 +73,7 @@ TESTS_CXX_COMPATIBLE = \
  hlist_add_before \
  hlist_add_behind \
  hlist_add_before-sort \
- hlist-prioqueue \
+ hlist-prioqueue-pairing \
 
 TESTS_C_ONLY = \
 
