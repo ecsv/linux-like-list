@@ -74,6 +74,7 @@ TESTS_CXX_COMPATIBLE = \
  hlist_add_behind \
  hlist_add_before-sort \
  hlist-prioqueue-pairing \
+ hlist-prioqueue-fibonacci \
 
 TESTS_C_ONLY = \
 
