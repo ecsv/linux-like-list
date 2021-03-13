@@ -4,7 +4,7 @@
 #
 # Minimal Linux-like double-linked list helper functions test
 #
-# SPDX-FileCopyrightText: 2012-2016, Sven Eckelmann <sven@narfation.org>
+# SPDX-FileCopyrightText: Sven Eckelmann <sven@narfation.org>
 
 TESTS_CXX_COMPATIBLE = \
  containerof \
