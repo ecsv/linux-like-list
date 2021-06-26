@@ -64,7 +64,7 @@ TESTS_C_ONLY = \
 TESTS_ALL = $(TESTS_CXX_COMPATIBLE) $(TESTS_C_ONLY)
 
 # tests flags and options
-CFLAGS += -g3 -pedantic -Wall -W -Werror -MD -MP
+CFLAGS += -g3 -pedantic -Wall -Wextra -Werror -MD -MP
 ifeq ("$(BUILD_CXX)", "1")
 	CFLAGS += -std=c++98
 	TESTS = $(TESTS_CXX_COMPATIBLE)
