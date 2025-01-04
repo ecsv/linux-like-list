@@ -708,8 +708,8 @@ static __inline__ void hlist_move_list(struct hlist_head *list,
  */
 #ifdef LIST_TYPEOF_USE
 #define hlist_entry_safe(node, type, member) __extension__ ({ \
-	 __typeof__(node) __node = (node); \
-	 !__node ? NULL : hlist_entry(__node, type, member); })
+	__typeof__(node) __node = (node); \
+	!__node ? NULL : hlist_entry(__node, type, member); })
 #else
 #define hlist_entry_safe(node, type, member) \
 	(node) ? hlist_entry(node, type, member) : NULL
