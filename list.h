@@ -712,7 +712,7 @@ static __inline__ void hlist_move_list(struct hlist_head *list,
 	!__node ? NULL : hlist_entry(__node, type, member); })
 #else
 #define hlist_entry_safe(node, type, member) \
-	(node) ? hlist_entry(node, type, member) : NULL
+	((node) ? hlist_entry(node, type, member) : NULL)
 #endif
 
 /**
